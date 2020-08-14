@@ -1,25 +1,51 @@
 import React, { Component } from 'react'
-import  { fetchTapes } from './tapes-api.js'
-import TapeList from './TapeList.js';
-import './App.css'
+import {
+    BrowserRouter as Router, 
+    Route, 
+    Switch,
+    Link
+} from 'react-router-dom';
+import ListPage from './ListPage/ListPage.js';
+import AddForm from './AddForm/AddForm.js';
+import DetailsPage from './DetailsPage/DetailsPage.js';
+import './App.css';
 
 export default class App extends Component {
-  state = {
-    tapes: []
-  }
+    render() {
+        return (
+            <div className="App">
+            <header className="App-header">    
+                <Router>
+                    <main>
 
-  componentDidMount = async () => {
-    const data = await fetchTapes();
-    await this.setState({tapes: data.body})
-  }
-  render() {
-    return (
-      <ul>
-        {
-          this.state.tapes && this.state.tapes.map(tape => <TapeList tape={tape} />)
-        }
-      </ul>
-    )
-  }
+                    <div className="sidebar">
+                    <Link to='/add'>Add</Link>
+                    <Link to='/'>List</Link>
+                    </div>
+                    <div className="content">
+                    <Switch>
+                        <Route 
+                            path="/" 
+                            exact
+                            render={(routerProps) => <ListPage {...routerProps} />} 
+                        />
+                        <Route 
+                            path="/add" 
+                            exact
+                            render={(routerProps) => <AddForm {...routerProps} />} 
+                        />
+                        <Route 
+                            path="/detail/:id" 
+                            exact
+                            render={(routerProps) => <DetailsPage {...routerProps} />} 
+                        />
+                    </Switch>
+                    </div>
+                    
+                    </main>
+                    </Router>
+            </header>
+            </div>
+        )
+    }
 }
-
