@@ -14,10 +14,11 @@ export default class App extends Component {
     render() {
         return (
             <div className="App">
-            <header className="App-header">    
+            <header className="App-header">
+                <h1>Tape Collection</h1>
+            </header>    
                 <Router>
                     <main>
-
                     <div className="sidebar">
                     <Link to='/add'>Add</Link>
                     <Link to='/'>List</Link>
@@ -44,7 +45,6 @@ export default class App extends Component {
                     
                     </main>
                     </Router>
-            </header>
             </div>
         )
     }

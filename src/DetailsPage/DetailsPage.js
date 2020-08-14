@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { fetchTape } from '../tapes-api'
+import './DetailsPage.css'
 
 export default class DetailsPage extends Component {
 
@@ -26,15 +27,15 @@ export default class DetailsPage extends Component {
         } = this.state.tape;
         console.log(this.state.tape)
         return (
-            <div>{
+            <div className='details'>{
                     id ?<>
-                         <h1 className='title'>{title}</h1>
-                    <img src={coverImg} alt={title} className='cover-img'/>
-                    <div className='artist'>{artist}</div>
-                    <div className='genre'>{genre}</div>
-                    <div className='description'>{description}</div>
-                    <div className='price'>Price: ${price}</div>
-            <div>In Stock? {inStock ? 'Yes' : 'No'}</div>
+                        <h1 className='details-title'>{title}</h1>
+                        <img src={coverImg} alt={title} className='details-cover-img'/>
+                        <div className='details-artist'>{artist}</div>
+                        <div className='details-genre'>{genre}</div>
+                        <div className='details-description'>{description}</div>
+                        <div className='details-price'>Price: ${price}</div>
+                        <div>In Stock? {inStock ? 'Yes' : 'No'}</div>
                         </>
                     : <h1>Loading</h1>
                 
