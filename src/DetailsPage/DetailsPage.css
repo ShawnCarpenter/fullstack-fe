@@ -1,0 +1,28 @@
+
+
+.details {
+    border: .5vmin solid;
+    border-radius: 1vmax;
+    /* height: 100%; */
+    width: 90%;
+    padding: 1vmin;
+    margin: 1vmin;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: 1fr 3f;
+    grid-template-columns: 50% 50%;
+    box-shadow: 1px 1px 2px var(--color1);
+}
+.details-cover-img {
+    width: 500px;
+}
+/*
+ <h1 className='title'>{title}</h1>
+                        <img src={coverImg} alt={title} className='details-cover-img'/>
+                        <div className='artist'>{artist}</div>
+                        <div className='genre'>{genre}</div>
+                        <div className='description'>{description}</div>
+                        <div className='price'>Price: ${price}</div>
+                        <div>In Stock? {inStock ? 'Yes' : 'No'}</div>
+*/

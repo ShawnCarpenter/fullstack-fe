@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { addTapes } from '../tapes-api';
+import './AddForm.css'
 
 
 
@@ -19,6 +20,7 @@ export default class AddForm extends Component {
         await addTapes(this.state)
         console.log(this.state);
     }
+    //TODO combine these handlers into one using e.target.name and e.target.value?
     handleTitleChange = e => this.setState({title:e.target.value})
     handleArtistChange = e => this.setState({artist: e.target.value})
     handleDescriptionChange = e => this.setState({description: e.target.value})
@@ -33,35 +35,33 @@ export default class AddForm extends Component {
     render() {
         return (
             <div>
-                <form onSubmit={this.handleFormSubmit}>
-                    <label>
-                        Title:
-                        <input onChange={this.handleTitleChange} />
-                    </label>
-                    <label>
-                        Artist:
-                        <input onChange={this.handleArtistChange} />
-                    </label>
-                    <label>
-                        Description:
-                        <input onChange={this.handleDescriptionChange} />
-                    </label>
-                    <label>
-                        Cover Image URL:
-                        <input onChange={this.handleCoverChange} />
-                    </label>
-                    <label>
-                        Genre:
-                        <input onChange={this.handleGenreChange} />
-                    </label>
-                    <label>
-                        Price:
-                        <input type="number" step=".01" onChange={this.handlePriceChange}></input>
-                    </label>
-                    <label>
-                        In Stock:
-                        <input type="checkbox" onChange={this.handleInStockChange}></input>
-                    </label>
+                <form className="add-form" onSubmit={this.handleFormSubmit}>
+                    <label>Title:</label>
+                    <input onChange={this.handleTitleChange} />
+                    
+                    <label>Artist:</label>
+                    <input onChange={this.handleArtistChange} />
+                    <label>Description:</label>
+                    <input onChange={this.handleDescriptionChange} />
+                    
+                    <label>Cover Image URL:</label>
+                    <input onChange={this.handleCoverChange} />
+                    
+                    <label>Genre:</label>
+                    <select onChange={this.handleGenreChange}>
+                        <option value="Rock">Rock</option>
+                        <option value="Punk">Punk</option>
+                        <option value="Grunge">Grunge</option>
+                        <option value="Folk Punk" >Folk Punk</option>
+                        <option value="Celtic Punk" >Celtic Punk</option>
+                    </select>
+                    
+                    <label>Price:</label>
+                    <input type="number" step=".01" onChange={this.handlePriceChange} />
+                    
+                    <label>In Stock:</label>
+                    <input type="checkbox" onChange={this.handleInStockChange}/>
+                    
                     <button>Add Tape</button>
                 </form> 
             </div>

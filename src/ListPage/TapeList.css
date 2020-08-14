@@ -2,6 +2,7 @@
 li { 
     border: .5vmin solid;
     border-radius: 1vmax;
+    /* height: 100%; */
     width: 20vw;
     padding: 1vmin;
     margin: 1vmin;
@@ -32,3 +33,4 @@ li {
 .redBox {
     border-color: red;
 }
+
