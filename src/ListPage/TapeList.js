@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import './TapeList.css';
 
 export default class TapeList extends Component {
@@ -9,22 +10,27 @@ export default class TapeList extends Component {
             title,
             artist,
             description,
-            cover_img,
+            coverImg=this.props.tape.cover_img,
             genre,
             price,
-            instock
+            inStock=this.props.tape.in_stock
         } = this.props.tape;
-        const itemStock = instock ? 'greenBox' : 'redBox';
+        
+        const itemStock = inStock ? 'greenBox' : 'redBox';
 
         return (<>
-                {<li key={id} className={itemStock}>
+                {
+                <Link to={`/detail/${id}`}>
+                <li key={id} className={itemStock}>
                     <h1 className='title'>{title}</h1>
-                    <img src={cover_img} alt={title} className='cover-img'/>
-                    <div classname='artist'>{artist}</div>
+                    <img src={coverImg} alt={title} className='cover-img'/>
+                    <div className='artist'>{artist}</div>
                     <div className='genre'>{genre}</div>
                     <div className='description'>{description}</div>
                     <div className='price'>Price: ${price}</div>
-                </li>}
+                </li>
+                </Link>
+                }
                 </>
         )
     }
