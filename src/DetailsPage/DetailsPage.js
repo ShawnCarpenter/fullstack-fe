@@ -34,6 +34,7 @@ export default class DetailsPage extends Component {
                     <div className='genre'>{genre}</div>
                     <div className='description'>{description}</div>
                     <div className='price'>Price: ${price}</div>
+            <div>In Stock? {inStock ? 'Yes' : 'No'}</div>
                         </>
                     : <h1>Loading</h1>
                 
