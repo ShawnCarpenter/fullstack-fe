@@ -1,33 +1,41 @@
 import React, { Component } from 'react';
-import { addTapes } from '../tapes-api';
-import './AddForm.css'
+import { addTapes, fetchGenres } from '../tapes-api';
+import './AddForm.css';
 
 
 
 export default class AddForm extends Component {
     state = {
-        title:null,
-        artist:null,
-        description: null,
-        coverImg: null,
-        genre:null,
-        price:null,
-        inStock:false,  
+        title:'',
+        artist:'',
+        description: '',
+        cover_img: '',
+        genre_id:'',
+        price:'',
+        in_stock:false,
+        genres:[],
+        addEdit: true,  
     }
+componentDidMount = async () => {
+    const genreList = await fetchGenres();
+    this.setState({
+        genres: genreList.body
+    });
+    }
+    
+
 
     handleFormSubmit = async (e) => {
         e.preventDefault();
         await addTapes(this.state)
-        console.log(this.state);
     }
-    //TODO combine these handlers into one using e.target.name and e.target.value?
-    handleTitleChange = e => this.setState({title:e.target.value})
-    handleArtistChange = e => this.setState({artist: e.target.value})
-    handleDescriptionChange = e => this.setState({description: e.target.value})
-    handleCoverChange = e => this.setState({coverImg: e.target.value})
-    handleGenreChange = e => this.setState({genre: e.target.value})
-    handlePriceChange = e => this.setState({price: e.target.value})
-    handleInStockChange = e => this.setState({inStock: e.target.checked})
+    handleItemChange = (e) => {
+        const target = e.target;
+        const name = target.name;
+        //Stole the next line from https://reactjs.org/docs/forms.html
+        const val = name === 'in_stock' ? target.checked : target.value;
+        this.setState({[name]:val});
+    }
 
 
 
@@ -37,32 +45,30 @@ export default class AddForm extends Component {
             <div>
                 <form className="add-form" onSubmit={this.handleFormSubmit}>
                     <label>Title:</label>
-                    <input onChange={this.handleTitleChange} />
+                    <input name="title" onChange={this.handleItemChange} value={this.state.title} />
                     
                     <label>Artist:</label>
-                    <input onChange={this.handleArtistChange} />
+                    <input name="artist" onChange={this.handleItemChange} value={this.state.artist}/>
                     <label>Description:</label>
-                    <input onChange={this.handleDescriptionChange} />
+                    <input name="description" onChange={this.handleItemChange} value={this.state.description}/>
                     
                     <label>Cover Image URL:</label>
-                    <input onChange={this.handleCoverChange} />
+                    <input name="cover_img" onChange={this.handleItemChange} value={this.state.cover_img}/>
                     
                     <label>Genre:</label>
-                    <select onChange={this.handleGenreChange}>
-                        <option value="Rock">Rock</option>
-                        <option value="Punk">Punk</option>
-                        <option value="Grunge">Grunge</option>
-                        <option value="Folk Punk" >Folk Punk</option>
-                        <option value="Celtic Punk" >Celtic Punk</option>
+                    <select name="genre_id" onChange={this.handleItemChange} value={this.state.genre_id}>
+                        {
+                            this.state.genres.length && this.state.genres.map(genre => <option value={genre.id} key={genre.id}>{genre.genre} </option>)
+                        }
                     </select>
                     
                     <label>Price:</label>
-                    <input type="number" step=".01" onChange={this.handlePriceChange} />
+                    <input name="price" type="number" step=".01" onChange={this.handleItemChange} />
                     
                     <label>In Stock:</label>
-                    <input type="checkbox" onChange={this.handleInStockChange}/>
+                    <input name="in_stock" type="checkbox" onChange={this.handleItemChange}/>
                     
-                    <button>Add Tape</button>
+                    <button>{this.state.addEdit ? 'Add' : 'Edit'}</button>
                 </form> 
             </div>
         )
