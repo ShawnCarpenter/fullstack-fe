@@ -1,70 +1,54 @@
 import React, { Component } from 'react';
-import { addTapes } from '../tapes-api';
-import './AddForm.css'
-
-
+import { addTapes, fetchGenres } from '../tapes-api';
+import Form from './Form';
 
 export default class AddForm extends Component {
-    state = {
-        title:null,
-        artist:null,
-        description: null,
-        coverImg: null,
-        genre:null,
-        price:null,
-        inStock:false,  
-    }
-
-    handleFormSubmit = async (e) => {
-        e.preventDefault();
-        await addTapes(this.state)
-        console.log(this.state);
-    }
-    //TODO combine these handlers into one using e.target.name and e.target.value?
-    handleTitleChange = e => this.setState({title:e.target.value})
-    handleArtistChange = e => this.setState({artist: e.target.value})
-    handleDescriptionChange = e => this.setState({description: e.target.value})
-    handleCoverChange = e => this.setState({coverImg: e.target.value})
-    handleGenreChange = e => this.setState({genre: e.target.value})
-    handlePriceChange = e => this.setState({price: e.target.value})
-    handleInStockChange = e => this.setState({inStock: e.target.checked})
-
-
-
-
-    render() {
-        return (
-            <div>
-                <form className="add-form" onSubmit={this.handleFormSubmit}>
-                    <label>Title:</label>
-                    <input onChange={this.handleTitleChange} />
-                    
-                    <label>Artist:</label>
-                    <input onChange={this.handleArtistChange} />
-                    <label>Description:</label>
-                    <input onChange={this.handleDescriptionChange} />
-                    
-                    <label>Cover Image URL:</label>
-                    <input onChange={this.handleCoverChange} />
-                    
-                    <label>Genre:</label>
-                    <select onChange={this.handleGenreChange}>
-                        <option value="Rock">Rock</option>
-                        <option value="Punk">Punk</option>
-                        <option value="Grunge">Grunge</option>
-                        <option value="Folk Punk" >Folk Punk</option>
-                        <option value="Celtic Punk" >Celtic Punk</option>
-                    </select>
-                    
-                    <label>Price:</label>
-                    <input type="number" step=".01" onChange={this.handlePriceChange} />
-                    
-                    <label>In Stock:</label>
-                    <input type="checkbox" onChange={this.handleInStockChange}/>
-                    
-                    <button>Add Tape</button>
-                </form> 
-            </div>
-        )
-    }
+  state = {
+    id:'',
+    title:'',
+    artist:'',
+    description: '',
+    cover_img: '',
+    genre:'',
+    genre_id: 1,
+    price:'',
+    in_stock:false,
+    genres: [],
+}
+componentDidMount = async () => {
+  const genreList = await fetchGenres();
+    this.setState({
+        genres: genreList.body
+    });
+}
+handleFormSubmit = async (e) => {
+  e.preventDefault();
+   await addTapes(this.state);
+   this.props.history.push('/');
+}
+handleItemChange = async (e) => {
+  const target = e.target;
+  const name = target.name;
+  const val = name === 'in_stock' ? target.checked : target.value;
+  await this.setState({[name]:val});
+}
+  render() {
+    
+    return (
+      <div>
+        <Form handleItemChange={this.handleItemChange}
+          handleFormSubmit={this.handleFormSubmit}
+          genres={this.state.genres}
+          title={this.state.title}
+          artist={this.state.artist}
+          description={this.state.description}
+          cover_img={this.state.cover_img}
+          genre_id={this.state.genre_id}
+          price={this.state.price}
+          in_stock={this.state.in_stock}
+          />
+      </div>
+      
+    )
+  }
 }

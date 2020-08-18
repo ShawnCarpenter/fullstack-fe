@@ -9,18 +9,18 @@ export default class TapeList extends Component {
             id,
             title,
             artist,
-            coverImg=this.props.tape.cover_img,
-            inStock=this.props.tape.in_stock
+            cover_img,
+            in_stock,
         } = this.props.tape;
         
-        const itemStock = inStock ? 'greenBox' : 'redBox';
+        const itemStock = in_stock ? 'greenBox' : 'redBox';
 
         return (<>
                 {
                 <Link to={`/detail/${id}`}>
                 <li key={id} className={itemStock}>
                     <h1 className='title'>{title}</h1>
-                    <img src={coverImg} alt={title} className='cover-img'/>
+                    <img src={cover_img} alt={title} className='cover-img'/>
                     <div className='artist'>{artist}</div>
                 </li>
                 </Link>
