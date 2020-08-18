@@ -1,6 +1,6 @@
 import request from 'superagent';
 
-const URL = `http://localhost:3001`|| 'https://sjc-alchemy.herokuapp.com/';
+const URL = 'https://sjc-alchemy.herokuapp.com';
 
 export function fetchTapes() {
     try{

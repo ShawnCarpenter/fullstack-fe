@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { addTapes, fetchGenres } from '../tapes-api';
 import Form from './Form';
 
 export default class AddForm extends Component {
@@ -12,14 +13,40 @@ export default class AddForm extends Component {
     genre_id: 1,
     price:'',
     in_stock:false,
-    new: true,
+    genres: [],
 }
-
+componentDidMount = async () => {
+  const genreList = await fetchGenres();
+    this.setState({
+        genres: genreList.body
+    });
+}
+handleFormSubmit = async (e) => {
+  e.preventDefault();
+   await addTapes(this.state);
+   this.props.history.push('/');
+}
+handleItemChange = async (e) => {
+  const target = e.target;
+  const name = target.name;
+  const val = name === 'in_stock' ? target.checked : target.value;
+  await this.setState({[name]:val});
+}
   render() {
     
     return (
       <div>
-        <Form tape={this.state}/>
+        <Form handleItemChange={this.handleItemChange}
+          handleFormSubmit={this.handleFormSubmit}
+          genres={this.state.genres}
+          title={this.state.title}
+          artist={this.state.artist}
+          description={this.state.description}
+          cover_img={this.state.cover_img}
+          genre_id={this.state.genre_id}
+          price={this.state.price}
+          in_stock={this.state.in_stock}
+          />
       </div>
       
     )
