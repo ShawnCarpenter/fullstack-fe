@@ -6,7 +6,8 @@
 }
 .App-header {
   width: 100%;
-  background-color:var(--color5)
+  background-color:var(--color5);
+  padding: 10px;
 }
 main {
   width: 100%;
@@ -15,5 +16,18 @@ main {
 }
 
 a {
-  color: var(--color1)
+  color: var(--color1);
+}
+
+.sidebar div {
+  background-color:var(--color5);
+  margin:10px;
+  font-size: x-large;
+  padding:10px;
+  border-radius: 5px;
+}
+
+.sidebar a {
+  font-weight: bold;
+  color: var(--color3);
 }

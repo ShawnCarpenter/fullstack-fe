@@ -11,7 +11,7 @@ state = {
     description:'',
     cover_img:'',
     genre:'',
-    genre_id:'',
+    genre_id:'1',
     price:'',
     in_stock:'',
     genres: [],
@@ -20,7 +20,7 @@ state = {
     componentDidMount = async () => {
         const returnedData = await fetchTape(this.props.match.params.id);
         const data = returnedData.body[0];
-        await this.setState({
+        this.setState({
             id: data.id,
             title: data.title,
             artist: data.artist,

@@ -3,7 +3,6 @@
 .details {
     border: .5vmin solid;
     border-radius: 1vmax;
-    /* height: 100%; */
     width: 90%;
     padding: 1vmin;
     margin: 1vmin;
@@ -14,6 +13,6 @@
     grid-template-columns: 50% 50%;
     box-shadow: 1px 1px 2px var(--color1);
 }
-.details-cover-img {
+/* .details-cover-img {
     width: 500px;
-}
+} */
