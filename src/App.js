@@ -20,8 +20,8 @@ export default class App extends Component {
                 <Router>
                     <main>
                     <div className="sidebar">
-                    <Link to='/add'>Add</Link>
-                    <Link to='/'>List</Link>
+                    <div><Link to='/add'>Add</Link></div>
+                    <div><Link to='/'>List</Link></div>
                     </div>
                     <div className="content">
                     <Switch>

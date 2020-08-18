@@ -36,7 +36,7 @@ export default class Form extends Component {
                 <label>In Stock:</label>
                 <input name="in_stock" type="checkbox" onChange={this.props.handleItemChange} checked={this.props.in_stock}/>
                 
-                <button>{this.props.button}</button>
+                <button>Save</button>
             </form> 
                
             </div>
