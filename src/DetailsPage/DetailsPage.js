@@ -1,35 +1,43 @@
 import React, { Component } from 'react'
-import { fetchTape, fetchGenres, deleteTape } from '../tapes-api'
+import { fetchTape, deleteTape } from '../tapes-api'
 import './DetailsPage.css'
-import AddForm from '../AddForm/AddForm'
+import Form from '../AddForm/Form'
 
 export default class DetailsPage extends Component {
 
     state = {
-        tape: {},
-        edit: false,
-        genres: []
-
+            id:null,
+            title:'',
+            artist:'',
+            description: '',
+            cover_img: '',
+            genre_id:'',
+            price:'',
+            in_stock:false, 
+            new: false
     }
     componentDidMount = async () => {
-        const data = await fetchTape(this.props.match.params.id);
-        this.setState({
-            tape: data.body[0]
+        const returnedData = await fetchTape(this.props.match.params.id);
+        const data = returnedData.body[0];
+        await this.setState({
+            id: data.id,
+            title: data.title,
+            artist: data.artist,
+            description: data.description,
+            cover_img: data.cover_img,
+            genre: data.genre,
+            genre_id: data.genre_id,
+            price: data.price,
+            in_stock: data.in_stock
         })
-        const genreList = await fetchGenres();
-        this.setState({
-            genres: genreList.body
-        })
-        const genre_id = this.state.genres.find(genre => genre.genre === data.body[0].genre).id;
-        this.setState({genre_id: genre_id})
     }
-    editButtonHandler = () => {
-        this.setState({edit: true})
+    editButtonHandler = async () => {
+        await this.setState({edit: true})
     }
     deleteButtonHandler = async () => {
-        console.log(this.state.tape.id)
-        const deletedTape = await deleteTape(this.state.tape.id);
-        console.log(deletedTape);
+        console.log(this.state.id)
+        await deleteTape(this.state.id);
+        this.props.history.push('/');
     }
     render() {
         const {
@@ -41,8 +49,7 @@ export default class DetailsPage extends Component {
             genre,
             price,
             in_stock
-        } = this.state.tape;
-        console.log(this.state.tape)
+        } = this.state;
         return (
             <>
             <div className='details'>{
@@ -62,7 +69,7 @@ export default class DetailsPage extends Component {
             <button className='delete' onClick={this.deleteButtonHandler} >Delete</button>
             <button onClick={this.editButtonHandler}>Edit</button>
                  {
-                     this.state.edit && <AddForm tape={this.state.tape} genre_id={this.state.genre_id} addEdit={false}/>
+                     this.state.edit && <Form tape={this.state} />
                  }
             
             </>
